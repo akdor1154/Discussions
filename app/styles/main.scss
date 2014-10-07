@@ -1,0 +1,120 @@
+// bower:scss
+// endbower
+
+/* Set initial properties */
+* {
+  font-family: Helvetica, san serif;
+  box-sizing: content-box;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  outline: 0;
+  text-decoration: none;
+}
+
+/* Remove standard HTML decoration for links */
+
+html, body {
+  height: 100%;
+}
+
+/* Create a basic container */ 
+.container {
+  padding: 10px;
+}
+
+/* Define header */
+.header {
+  position: fixed;
+  top: 0;
+  z-index: -100;
+  width: 100%;
+  background-color: #4488aa;
+  height: 100px;
+  color: #fff;
+  font-size: 2em;
+  a{
+    color: white;
+  }
+}
+
+/* Define footer */
+.footer {
+  background-color: #ddd;
+  color: #555;
+}
+
+/* Define cards */
+.card {
+  box-shadow: 0px 2px 4px #aaa;
+  margin-top: 14px;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.last-card {
+  box-shadow: 0px 2px 4px #aaa;
+  margin-top: 14px;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 50px;
+}
+
+/* Define card titles */
+.title {
+    font-size: 1em;
+    color: #555;
+  a {
+    color: #555;
+  }
+}
+
+/* Define card authors */
+.author {
+  font-size: 0.7em;
+  color: #999;
+  font-weight: bold;
+}
+
+.writer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background-color: #eee;
+  width: 100%;
+}
+
+.bg-white {
+  background-color: #fff;
+}
+
+.offset-top {
+  margin-top: 100px;
+}
+
+.fill-height {
+  height: 100%;
+}
+
+.clear {
+  clear: both;
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  /* Resize header for large screens */
+  .header {
+    height: 180px;
+  }
+
+  /* Move content away from header */
+  .offset-top {
+    margin-top: 180px;
+  }
+
+}

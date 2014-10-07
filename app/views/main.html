@@ -1,0 +1,15 @@
+<div ng-controller="MainCtrl">
+	<div class="card" ng-repeat="question in questions" ng-class="{'last-card':$last}">
+		<div class="title">
+			<a href="#/question/{{question._id}}">{{ question.title }}</a>
+		</div>
+		<div class="author">
+			{{ question.author }}
+		</div>
+	</div>
+	<div class="writer">
+		<div class="container">
+			respond here!
+		</div>
+	</div>
+</div>
