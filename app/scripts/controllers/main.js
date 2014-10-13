@@ -8,15 +8,44 @@
  * Controller of the forumApp
  */
 angular.module('forumApp')
-  .controller('MainCtrl', ['$scope', '$routeParams', 'questionFactory', 'browserService', function ($scope, $routeParams, questionFactory, browserService) {
+  .controller('MainCtrl', [
+  	'$scope',
+  	'$routeParams',
+  	'questionFactory',
+  	'toolboxFactory',
+  	function ($scope, $routeParams, questionFactory, toolboxFactory) {
     
-    $scope.questions = questionFactory.getAll();
-
-    browserService.scrollMax(function(){
-    	// $apply runs the digest loop: http://angular-tips.com/blog/2013/08/watch-how-the-apply-runs-a-digest/
+    questionFactory.getQuestions()
+      .success(function (quest) {
+          $scope.questions = quest;
+      })
+      .error(function (error) {
+          $scope.status = 'Unable to load questions: ' + error.message;
+      });
+    
+    toolboxFactory.scrollMax(function(){
+    	// $apply runs the 'digest loop'
     	$scope.$apply(function() {
     		questionFactory.loadNext();
     	});
     });
-    // console.log('bottom!');
+
+    $scope.deleteQuestion = function(id) {
+      questionFactory.deleteQuestion(id);
+      var index = toolboxFactory.findObjectInArray($scope.questions, '_id', id).objectPosition;
+      console.log(index);
+      if(index!== -1)
+        $scope.questions.splice(index, 1);
+    };
+
+
+    // just testing making filters :)
+    $scope.searchtest = "";
+     $scope.searchAuthor = function (question){
+        if (question.author.indexOf($scope.searchtest)!=-1) {
+                return true;
+            }
+            return false;
+      };
+
 }]);

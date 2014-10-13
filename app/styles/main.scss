@@ -1,6 +1,11 @@
 // bower:scss
 // endbower
 
+
+/* imports */
+@import 'loader'; 
+@import 'animate'; 
+
 /* Set initial properties */
 * {
   font-family: Helvetica, san serif;
@@ -25,6 +30,8 @@ html, body {
 
 /* Define header */
 .header {
+  background-image: url('../images/header.jpg');
+  background-size: 100% Auto;
   position: fixed;
   top: 0;
   z-index: -100;
@@ -46,18 +53,11 @@ html, body {
 
 /* Define cards */
 .card {
+  background-color: #fff;
   box-shadow: 0px 2px 4px #aaa;
   margin-top: 14px;
   border-radius: 4px;
   padding: 10px;
-}
-
-.last-card {
-  box-shadow: 0px 2px 4px #aaa;
-  margin-top: 14px;
-  border-radius: 4px;
-  padding: 10px;
-  margin-bottom: 50px;
 }
 
 /* Define card titles */
@@ -93,11 +93,25 @@ html, body {
 }
 
 .fill-height {
-  height: 100%;
+  min-height: 100%;
 }
 
 .clear {
   clear: both;
+}
+
+.button {
+  background-color: #555;
+  text-align: center;
+  cursor: pointer;
+  color: #fff;
+  width: 100px;
+  border-radius: 4px;
+}
+
+.spacer {
+  clear: both;
+  height: 200px;
 }
 
 /* Responsive: Portrait tablets and up */

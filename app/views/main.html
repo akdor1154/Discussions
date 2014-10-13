@@ -1,15 +1,38 @@
 <div ng-controller="MainCtrl">
-	<div class="card" ng-repeat="question in questions" ng-class="{'last-card':$last}">
+          <input type="text" ng-model="searchtest">
+
+	<div class="animation card" ng-animate="'animate'" ng-repeat="question in questions | orderBy:score | filter:searchAuthor">
+		<div class="score">
+			{{ question.score }}
+		</div>
 		<div class="title">
 			<a href="#/question/{{question._id}}">{{ question.title }}</a>
 		</div>
 		<div class="author">
 			{{ question.author }}
 		</div>
+		<div ng-click="deleteQuestion(question._id)" class="button">
+			delete
+		</div>
 	</div>
-	<div class="writer">
+
+	<div class="spacer">
+		
+	</div>
+	
+	<div class="writer" ng-controller="NewQuestionCtrl">
 		<div class="container">
-			respond here!
+			<input name="title" ng-model="newPost.title" placeholder="title" style="width: 100%;">
+			<input name="author" ng-model="newPost.author" placeholder="posted by" style="width: 100%;">
+			<br><br>
+			<textarea name="comment" ng-model="newPost.comment" style="width: 100%;">
+			</textarea>
+			<br><br>
+			<div ng-click="addQuestion()" class="button">
+				add
+			</div>
 		</div>
 	</div>
 </div>
+<!-- 
+newPost.title, newPost.author, newPost.comment -->

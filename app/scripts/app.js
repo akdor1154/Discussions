@@ -11,12 +11,17 @@
 
  angular
  .module('forumApp', [
-  'ngRoute'
+  'ngRoute',
+  'ngAnimate'
   ])
 
  .config(function($routeProvider, $locationProvider) {
+    
     /* Where to direct unmatched urls */
-    $routeProvider.otherwise({redirectTo: '/'})
+    $routeProvider.otherwise({
+      redirectTo: '/'
+    })
+
     /* Where to direct urls */
     $routeProvider
     .when('/', {
@@ -29,76 +34,59 @@
     });    
   })
 
- .factory('questionFactory', [function() {
-  /* Provides question data to controllers */
+ .factory('questionFactory', ['$http' , '$routeParams', function($http, $routeParams) {
 
-  var questionFactory = {};
+    var questionFactory = {};
+    var urlBase = 'http://localhost:3000/questions';
 
-  var i = 0;
+    questionFactory.getQuestions = function () {
+        return $http.get(urlBase);
+    };
 
-  var questions = [
-    {
-      _id: 10000,
-      title: 'I made this forum! ... And I would like your feedback on how useful it is! Also feel free to give me huge amounts of money. I am always happy to accept money.',
-      author: 'nathansherburn',
-      comment: 'hello everyone from nathan!'
+    questionFactory.getQuestionById = function (id) {
+        return $http.get(urlBase + '/' + id);
+    };
+
+    questionFactory.addQuestion = function (post) {
+        return $http.post(urlBase, post);
+    };
+
+    questionFactory.updateQuestion = function (editedQuestion) {
+        console.log(urlBase + '/' + $routeParams.id);
+        return $http.put(urlBase + '/' + $routeParams.id, editedQuestion);
+    };
+
+    questionFactory.deleteQuestion = function (id) {
+        return $http.delete(urlBase + '/' + id);
+    };
+
+    questionFactory.loadNext = function() {
+      console.log('hello :)');
     }
-  ];
-
-  var questionsRaw = [
-    {
-      _id: 10001,
-      author: 'jon_li',
-      title: 'who likes bananas!?',
-      comment: 'hello everyone from jon!'
-    },
-    {
-      _id: 10002,
-      author: 'jamie28',
-      title: 'I teach eng1030',
-      comment: 'hello everyone from jamie!'
-    },
-    {
-      _id: 10003,
-      author: 'ashan123',
-      title: 'Hi my name is Ashan',
-      comment: 'hello everyone from ashan!'
-    },
-    {
-      _id: 10004,
-      author: 'don25',
-      title: 'this is my first post',
-      comment: 'hello everyone from don!'
-    }
-  ];
-
-  questionFactory.getAll = function () {
-    return questions;
-  };
-
-  // replace this by node/mongo backend functionality
-  questionFactory.getById = function (id) {
-    for (var i=0; i<questions.length; i++){
-      if (questions[i]._id === id) {
-        return questions[i];
-      }
-    }
-  };
-
-  questionFactory.loadNext = function () {
-    if (i<=3) {
-      questions.push(questionsRaw[i]);
-      i++;
-    }
-  };
-
-  return questionFactory;
+    return questionFactory;
 }])
 
-.factory('browserService', [function() {
-  /* Provides useful browser events and properties to controllers */
+.factory('toolboxFactory', [function() {
 
-  var documentHeight = function() {
+  /* Provides useful browser events, properties and functions to controllers */
+  var toolboxFactory = {};
+
+  toolboxFactory.findObjectInArray = function(array, property, value){
+    for (var i = 0, len = array.length; i < len; i++) {
+      if (array[i][property] === value) {
+        return {
+          objectFound: array[i],
+          objectPosition: i
+        }
+      }
+    }
+    return {
+      objectFound: -1,
+      objectPosition: -1
+    }
+  };
+
+  toolboxFactory.documentHeight = function() {
     var D = document;
     return Math.max(
       Math.max(D.body.scrollHeight, D.documentElement.scrollHeight),
@@ -107,16 +95,13 @@
       )
   };
 
-  var scrollMax = function(callback) {
+  toolboxFactory.scrollMax = function(callback) {
     window.onscroll = function() {
-      if ((window.innerHeight + window.scrollY) >= documentHeight()) {
+      if ((window.innerHeight + window.scrollY) >= toolboxFactory.documentHeight()) {
         callback();
       }
     };
   };
 
-  return {
-    documentHeight: documentHeight,
-    scrollMax: scrollMax
-  }
+  return toolboxFactory;
 }]);
