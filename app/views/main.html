@@ -1,9 +1,12 @@
 <div ng-controller="MainCtrl">
-          <input type="text" ng-model="searchtest">
+    
+    <input type="text" ng-model="searchtest">
 
-	<div class="animation card" ng-animate="'animate'" ng-repeat="question in questions | orderBy:score | filter:searchAuthor">
+	<div class="card" ng-repeat="question in questions.questionList | orderBy:score | filter:searchAuthor">
 		<div class="score">
-			{{ question.score }}
+			<img src="../images/upvote.png" ng-click="upVote(question._id)"><br>
+			{{ question.score }}<br>
+			<img src="../images/dnvote.png" ng-click="dnVote(question._id)">
 		</div>
 		<div class="title">
 			<a href="#/question/{{question._id}}">{{ question.title }}</a>
@@ -11,16 +14,23 @@
 		<div class="author">
 			{{ question.author }}
 		</div>
+		<br>
+		<br>
 		<div ng-click="deleteQuestion(question._id)" class="button">
 			delete
 		</div>
 	</div>
+    
+    <div id="circleG">
+      <div id="circleG_1" class="circleG">
+      </div>
+      <div id="circleG_2" class="circleG">
+      </div>
+      <div id="circleG_3" class="circleG">
+      </div>
+    </div>
 
-	<div class="spacer">
-		
-	</div>
-	
-	<div class="writer" ng-controller="NewQuestionCtrl">
+	<div class="writer" style="display: none;" ng-controller="NewQuestionCtrl">
 		<div class="container">
 			<input name="title" ng-model="newPost.title" placeholder="title" style="width: 100%;">
 			<input name="author" ng-model="newPost.author" placeholder="posted by" style="width: 100%;">

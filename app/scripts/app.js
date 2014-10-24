@@ -43,6 +43,10 @@
         return $http.get(urlBase);
     };
 
+    questionFactory.getNextTenQuestions = function (requestNumber) {
+        return $http.get(urlBase + '/nextTenQuestions/' + requestNumber);
+    };
+
     questionFactory.getQuestionById = function (id) {
         return $http.get(urlBase + '/' + id);
     };
@@ -52,17 +56,37 @@
     };
 
     questionFactory.updateQuestion = function (editedQuestion) {
-        console.log(urlBase + '/' + $routeParams.id);
         return $http.put(urlBase + '/' + $routeParams.id, editedQuestion);
+    };
+
+    questionFactory.upVoteQuestion = function (id) {
+      return $http.put(urlBase + '/upvote/' + id);
+    };
+
+    questionFactory.dnVoteQuestion = function (id) {
+      return $http.put(urlBase + '/dnvote/' + id);
     };
 
     questionFactory.deleteQuestion = function (id) {
         return $http.delete(urlBase + '/' + id);
     };
 
-    questionFactory.loadNext = function() {
-      console.log('hello :)');
-    }
+
+    questionFactory.questions = {
+      numberOfRequestsForQuestions: 1,
+      questionsList: []
+    };
+
+    // Populate the questionList
+    questionFactory.getNextTenQuestions(0)
+    .success(function (quest) {
+      questionFactory.questions.questionList = quest;
+    })
+    .error(function (error) {
+      console.log('Unable to load questions: ' + error.message);
+    });
+
+
     return questionFactory;
 }])
 
@@ -75,13 +99,13 @@
     for (var i = 0, len = array.length; i < len; i++) {
       if (array[i][property] === value) {
         return {
-          objectFound: array[i],
+          referenceToObject: array[i],
           objectPosition: i
         }
       }
     }
     return {
-      objectFound: -1,
+      referenceToObject: -1,
       objectPosition: -1
     }
   };
@@ -97,7 +121,7 @@
 
   toolboxFactory.scrollMax = function(callback) {
     window.onscroll = function() {
-      if ((window.innerHeight + window.scrollY) >= toolboxFactory.documentHeight()) {
+      if ((window.innerHeight + window.scrollY + 20) >= toolboxFactory.documentHeight()) {
         callback();
       }
     };
