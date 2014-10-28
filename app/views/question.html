@@ -1,4 +1,4 @@
-<div ng-controller="QuestionCtrl">
+<div>
   <div class="card">
     <div class="score">
      {{ question.score }}
@@ -12,7 +12,9 @@
     <div class="comment">
       {{ question.comment }}
     </div>
-    <div>
+
+
+    <div class="edit-question" style="display: none;">
     <br>
     <br>
     <br>
@@ -28,4 +30,27 @@
 	    </div>
     </div>
   </div>
+
+  <div class="card" ng-repeat="comment in comments | orderBy:date">
+    {{ comment.message }}
+  </div>
+
+  <div class="spacer"></div>
+
+  <div class="contribute reply">
+    <div id="cross"></div>
+  </div>
+
+  <div class="messager">
+    <div class="container">
+      <div class="input-box-container">
+        <textarea class="reply-box" ng-model="newComment" placeholder="reply here"></textarea>
+      </div>
+      <div ng-click="addComment()" class="button send-button">
+        send
+      </div>
+    </div>
+  </div>
+
+
 </div>

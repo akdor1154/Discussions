@@ -1,4 +1,4 @@
-<div ng-controller="MainCtrl">
+<div>
     
     <input type="text" ng-model="searchtest">
 
@@ -30,19 +30,24 @@
       </div>
     </div>
 
-	<div class="writer" style="display: none;" ng-controller="NewQuestionCtrl">
+<div ng-controller="NewQuestionCtrl">
+	<div class="contribute ask">
+		<div id="cross"></div>
+	</div>
+	<div class="writer">
 		<div class="container">
-			<input name="title" ng-model="newPost.title" placeholder="title" style="width: 100%;">
-			<input name="author" ng-model="newPost.author" placeholder="posted by" style="width: 100%;">
-			<br><br>
-			<textarea name="comment" ng-model="newPost.comment" style="width: 100%;">
-			</textarea>
-			<br><br>
-			<div ng-click="addQuestion()" class="button">
-				add
+			<div class="input-box-container">
+
+				<input name="title" ng-model="newPost.title" placeholder="title">
+				<input name="author" ng-model="newPost.author" placeholder="posted by">
+				<textarea ng-model="newPost.comment" placeholder="question"></textarea>
+			</div>
+			<div ng-click="addQuestion()" class="button send-button">
+				post
 			</div>
 		</div>
-	</div>
+	</div>	
+</div>
 </div>
 <!-- 
 newPost.title, newPost.author, newPost.comment -->

@@ -11,16 +11,15 @@
 
  angular
  .module('forumApp', [
-  'ngRoute',
-  'ngAnimate'
+  'ngRoute', //add animate back later
   ])
 
- .config(function($routeProvider, $locationProvider) {
+ .config(function($routeProvider) {
     
     /* Where to direct unmatched urls */
     $routeProvider.otherwise({
       redirectTo: '/'
-    })
+    });
 
     /* Where to direct urls */
     $routeProvider
@@ -71,7 +70,6 @@
         return $http.delete(urlBase + '/' + id);
     };
 
-
     questionFactory.questions = {
       numberOfRequestsForQuestions: 1,
       questionsList: []
@@ -90,6 +88,33 @@
     return questionFactory;
 }])
 
+
+  .factory('socketFactory', ['$rootScope', function ($rootScope) {
+    var socket = io.connect('http://localhost:3000/');
+      return {
+      
+      on: function (eventName, callback) {
+        socket.on(eventName, function () {
+          var args = arguments;
+          $rootScope.$apply(function () {
+            callback.apply(socket, args);
+          });
+        });
+      },
+      emit: function (eventName, data, callback) {
+        socket.emit(eventName, data, function () {
+          var args = arguments;
+          $rootScope.$apply(function () {
+            if (callback) {
+              callback.apply(socket, args);
+            }
+          });
+        });
+      }
+    };
+  }])
+
+
 .factory('toolboxFactory', [function() {
 
   /* Provides useful browser events, properties and functions to controllers */
@@ -101,13 +126,13 @@
         return {
           referenceToObject: array[i],
           objectPosition: i
-        }
+        };
       }
     }
     return {
       referenceToObject: -1,
       objectPosition: -1
-    }
+    };
   };
 
   toolboxFactory.documentHeight = function() {
@@ -116,7 +141,7 @@
       Math.max(D.body.scrollHeight, D.documentElement.scrollHeight),
       Math.max(D.body.offsetHeight, D.documentElement.offsetHeight),
       Math.max(D.body.clientHeight, D.documentElement.clientHeight)
-      )
+      );
   };
 
   toolboxFactory.scrollMax = function(callback) {

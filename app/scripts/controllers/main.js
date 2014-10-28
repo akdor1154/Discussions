@@ -17,16 +17,7 @@
    function ($scope, $routeParams, $timeout, questionFactory, toolboxFactory) {
 
     var allowMoreRequests = true; 
-
-    // $scope.$watch(questionFactory.questionList,
-    //   function(newValue, oldValue) {
-    //     console.log('eeloo')
-    //     if ( newValue !== oldValue ) {
-    //       $scope.questions = questionFactory.questionList;
-    //     }
-    //   }
-    // )
-
+  
 $scope.questions = questionFactory.questions;
 
 toolboxFactory.scrollMax(function(){
@@ -60,8 +51,9 @@ $scope.deleteQuestion = function(id) {
     '_id',
     id
     ).objectPosition;
-  if(index !== -1)
+  if(index !== -1) {
     questionFactory.questions.questionList.splice(index, 1);
+  }
 };
 
 
@@ -82,7 +74,7 @@ $scope.deleteQuestion = function(id) {
       questionId
     );
     searchResults.referenceToObject.score += 1;
-  }
+  };
 
   $scope.dnVote = function (questionId) {
     questionFactory.dnVoteQuestion(questionId);
@@ -92,7 +84,7 @@ $scope.deleteQuestion = function(id) {
       questionId
     );
     searchResults.referenceToObject.score -= 1;
-  }
+  };
 
 }
 ]);

@@ -22,7 +22,9 @@
     <!-- Add your site or application content here -->
     <div class="header">
       <div class="container">
-        <a href="#/">discussions</a>
+        <a href="#/">Discussions</a>
+        <br>
+        Engineering
       </div>
     </div>
 
@@ -54,8 +56,12 @@
     <![endif]-->
     <!-- endbuild -->
 
+    <!-- socket.io-client has no bower.json to specify the 'main file' as others below -->
+	<script src="bower_components/socket.io-client/socket.io.js"></script>
+
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/json3/lib/json3.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
@@ -69,6 +75,7 @@
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/question.js"></script>
         <script src="scripts/controllers/newQuestion.js"></script>
+        <script src="scripts/controllers/newReply.js"></script>
         <!-- endbuild -->
 </body>
 </html>
