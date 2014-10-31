@@ -32,8 +32,10 @@ angular.module('forumApp')
 
     socketFactory.on('new message', function (data) {
       if (data.question_id === questionId) {
-        $("html, body").animate({scrollTop:$(document).height()}, 'slow');
         $scope.comments = $scope.comments.concat(data);
+        if (messagerOpen === true) {
+          $("html, body").animate({scrollTop:$(document).height()}, 'slow');  
+        }      
         // socketFactory.emit('my other event', { my: 'data' });
       }
   });
@@ -85,13 +87,14 @@ angular.module('forumApp')
     if ($scope.newComment !== '') {
       var message = {
         question_id: questionId,
+        author: 'tim',
         message: $scope.newComment
       }
       $scope.newComment = '';
-      $("html, body").animate({scrollTop:$(document).height()}, 'slow');
+      $("html, body").animate({scrollTop:$(document).height() - 1}, 'slow');
       socketFactory.emit('new message', message);
       $scope.comments = $scope.comments.concat(message);
-      // console.log('sent: ', $scope.newComment);
+      console.log('sent: ', $scope.newComment);
       console.log($scope.comments);
     }
   };

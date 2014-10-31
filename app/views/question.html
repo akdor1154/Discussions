@@ -32,7 +32,7 @@
   </div>
 
   <div class="card" ng-repeat="comment in comments | orderBy:date">
-    {{ comment.message }}
+    <b>{{ comment.author }}:</b> {{ comment.message }}
   </div>
 
   <div class="spacer"></div>
