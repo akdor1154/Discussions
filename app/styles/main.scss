@@ -6,6 +6,13 @@
 @import 'loader'; 
 @import 'animate'; 
 
+
+/* Color Scheme */
+$primary: #2c1e3a;
+$secondary: #222;
+$light-gray: #f1f0f0;
+$shadow: #999;
+
 /* Set initial properties */
 * {
   font-family: Helvetica, sans serif;
@@ -15,12 +22,17 @@
   border: 0;
   outline: 0;
   text-decoration: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 /* Remove standard HTML decoration for links */
 
 html, body {
   height: 100%;
+}
+
+input, textarea {
+  font-size: 1em;
 }
 
 /* Create a basic container */ 
@@ -36,7 +48,7 @@ html, body {
   top: 0;
   z-index: -100;
   width: 100%;
-  background-color: #2c1e3a;
+  background-color: $primary;
   height: 100px;
   color: #fff;
   a{
@@ -102,8 +114,9 @@ html, body {
   position: fixed;
   bottom: -145px;
   left: 0;
-  background-color: #eee;
+  background-color: $light-gray;
   width: 100%;
+  box-shadow: 0px 0px 5px $shadow;
   input, textarea {
     float: left;
     width: 100%;
@@ -118,12 +131,14 @@ html, body {
   position: fixed;
   bottom: -145px;
   left: 0;
-  background-color: #eee;
+  background-color: $light-gray;
   width: 100%;
+  box-shadow: 0px 0px 5px $shadow;
 }
 
 .bg-white {
   background-color: #fff;
+  box-shadow: 0px -4px 10px #000;
 }
 
 .offset-top {
@@ -152,11 +167,13 @@ html, body {
   height: 200px;
 }
 
+
 .contribute {
-  z-index: 20;
   position: fixed;
-  bottom: 40px;
-  right: 10%;
+  position: fixed;
+  bottom: 55px;
+  right: 90px;
+  z-index: 20;
   height: 60px;
   width: 60px;
   border-radius: 60px;
@@ -164,8 +181,8 @@ html, body {
   font-size: 43px;
   color: #fff;
   cursor: pointer;
-  box-shadow: 0px 5px 5px #999;
-  // opacity: 0.9;
+  box-shadow: 0px 4px 4px $shadow;
+  margin-right: -30px;
 }
 
 .ask {
