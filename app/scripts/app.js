@@ -103,6 +103,7 @@
       },
       emit: function (eventName, data, callback) {
         socket.emit(eventName, data, function () {
+          console.log('args -' + arguments);
           var args = arguments;
           $rootScope.$apply(function () {
             if (callback) {

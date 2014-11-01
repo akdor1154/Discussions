@@ -90,12 +90,12 @@ angular.module('forumApp')
         author: 'tim',
         message: $scope.newComment
       }
-      $scope.newComment = '';
       $("html, body").animate({scrollTop:$(document).height() - 1}, 'slow');
-      socketFactory.emit('new message', message);
+      socketFactory.emit('message sent', message);
       $scope.comments = $scope.comments.concat(message);
-      console.log('sent: ', $scope.newComment);
-      console.log($scope.comments);
+      // console.log('sent- ' + $scope.newComment);
+      // console.log($scope.comments);
+      $scope.newComment = '';
     }
   };
 
