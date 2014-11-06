@@ -22,7 +22,7 @@
     <!-- Add your site or application content here -->
     <div class="header">
       <div class="container">
-        <a href="#/">Discussions</a><span style="color: #979;"> alpha v0.1</span>
+        <a href="#/">Discussions</a><span style="color: #979; font-size: 0.8em;"> alpha v0.1</span>
         <br>
         Engineering
       </div>
@@ -56,8 +56,6 @@
     <![endif]-->
     <!-- endbuild -->
 
-    <!-- socket.io-client has no bower.json to specify the 'main file' as others below -->
-	<script src="bower_components/socket.io-client/socket.io.js"></script>
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
@@ -68,6 +66,10 @@
     <script src="bower_components/ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <!-- endbower -->
+
+    <!-- socket.io-client has no bower.json to specify the 'main file' -->
+    <script src="bower_components/socket.io-client/socket.io.js"></script>
+
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
@@ -75,7 +77,6 @@
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/question.js"></script>
         <script src="scripts/controllers/newQuestion.js"></script>
-        <script src="scripts/controllers/newReply.js"></script>
         <!-- endbuild -->
 </body>
 </html>

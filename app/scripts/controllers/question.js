@@ -1,5 +1,7 @@
 'use strict';
 
+/* global $ */
+
 /**
  * @ngdoc function
  * @name forumApp.controller:QuestionCtrl
@@ -11,16 +13,31 @@ angular.module('forumApp')
   .controller('QuestionCtrl', [
   	'$scope', 
   	'$routeParams', 
-  	'questionFactory',
+    'questionFactory',
+    'commentFactory',
     'socketFactory',
     'toolboxFactory', 
-  	function ($scope, $routeParams, questionFactory, socketFactory, toolboxFactory) {
+  	function ($scope, $routeParams, questionFactory, commentFactory, socketFactory, toolboxFactory) {
+
+    // Grab the question id from the route params
+    var questionId = $routeParams.id;
+
+    $scope.previousComments = [];
+
+    // Retrieve previous comments
+    commentFactory.getComments(questionId)
+    .success(function (comm) {
+      $scope.previousComments = comm;
+      console.log($scope.previousComments);
+    })
+    .error(function (error) {
+      console.log('Unable to load comments: ' + error.message);
+    });
+    
 
     // Holds the array of comment objects
     $scope.comments = [];
 
-    // Grab the question id from the route params
-    var questionId = $routeParams.id;
 
     // Tells socket.io that participant has entered the question's discussion page 
     socketFactory.emit('enter discussion', {
@@ -34,7 +51,7 @@ angular.module('forumApp')
       if (data.question_id === questionId) {
         $scope.comments = $scope.comments.concat(data);
         if (messagerOpen === true) {
-          $("html, body").animate({scrollTop:$(document).height()}, 'slow');  
+          $('html, body').animate({scrollTop:$(document).height()}, 'slow');  
         }      
         // socketFactory.emit('my other event', { my: 'data' });
       }
@@ -85,12 +102,14 @@ angular.module('forumApp')
 
   $scope.addComment = function () {
     if ($scope.newComment !== '') {
+      // Save comment to database
       var message = {
         question_id: questionId,
-        author: 'tim',
+        author: 'sherbinator2014 ',
         message: $scope.newComment
-      }
-      $("html, body").animate({scrollTop:$(document).height() - 1}, 'slow');
+      };
+      $('html, body').animate({scrollTop:$(document).height() - 1}, 'slow');
+      commentFactory.addComment(questionId, message);
       socketFactory.emit('message sent', message);
       $scope.comments = $scope.comments.concat(message);
       // console.log('sent- ' + $scope.newComment);
@@ -98,6 +117,32 @@ angular.module('forumApp')
       $scope.newComment = '';
     }
   };
+
+
+$scope.deleteComment = function(commentId) {
+  commentFactory.deleteComment(commentId);
+  var index = -1;
+
+  index = toolboxFactory.findObjectInArray(
+    $scope.comments,
+    '_id',
+    commentId
+    ).objectPosition;
+  if(index !== -1) {
+      $scope.comments.splice(index, 1);
+  } else {
+    index = toolboxFactory.findObjectInArray(
+      $scope.previousComments,
+      '_id',
+      commentId
+      ).objectPosition;
+      if (index !== -1) {
+          $scope.previousComments.splice(index, 1);
+      }
+  }
+};
+
+
 
     var sendOnEnter = true;
     $('.reply-box').on('keydown', function(e) {
@@ -113,25 +158,25 @@ angular.module('forumApp')
 
     var closeWriter = function () {
         messagerOpen = false;
-        $(".messager").animate({bottom:'-145px'}, 200);
-        $(".contribute").animate({bottom:'55px', right:'90px', opacity: 1}, 200);
-        $("#cross").css({'-webkit-transform' : 'rotate('+ 0 +'deg)',
+        $('.messager').animate({bottom:'-145px'}, 200);
+        $('.contribute').animate({bottom:'55px', right:'90px', opacity: 1}, 200);
+        $('#cross').css({'-webkit-transform' : 'rotate('+ 0 +'deg)',
          '-moz-transform' : 'rotate('+ 0 +'deg)',
          '-ms-transform' : 'rotate('+ 0 +'deg)',
          'transform' : 'rotate('+ 0 +'deg)'});
-    }
+    };
 
     var openWriter = function () {
         messagerOpen = true;
-        $(".messager").animate({bottom:'0px'}, 200);
-        $(".contribute").animate({bottom:'155px', right:'50%', opacity: 1}, 200);
-        $("#cross").css({'-webkit-transform' : 'rotate('+ 45 +'deg)',
+        $('.messager').animate({bottom:'0px'}, 200);
+        $('.contribute').animate({bottom:'155px', right:'50%', opacity: 1}, 200);
+        $('#cross').css({'-webkit-transform' : 'rotate('+ 45 +'deg)',
          '-moz-transform' : 'rotate('+ 45 +'deg)',
          '-ms-transform' : 'rotate('+ 45 +'deg)',
          'transform' : 'rotate('+ 45 +'deg)'});
-    }
+    };
 
-    $(".contribute").click(function(){
+    $('.contribute').click(function(){
       if (messagerOpen) {
         closeWriter();
       } else {

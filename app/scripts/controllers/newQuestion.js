@@ -1,5 +1,7 @@
 'use strict';
 
+/*global $ */
+
 /**
  * @ngdoc function
  * @name forumApp.controller:NewQuestionCtrl
@@ -20,23 +22,23 @@
         writerOpen = false;
         $('.writer').animate({bottom:'-145px'}, 200);
         $('.contribute').animate({bottom:'55px', right:'90px', opacity: 1}, 200);
-        $("#cross").css({'-webkit-transform' : 'rotate('+ 0 +'deg)',
+        $('#cross').css({'-webkit-transform' : 'rotate('+ 0 +'deg)',
          '-moz-transform' : 'rotate('+ 0 +'deg)',
          '-ms-transform' : 'rotate('+ 0 +'deg)',
          'transform' : 'rotate('+ 0 +'deg)'});
-    }
+    };
 
     var openWriter = function () {
         writerOpen = true;
         $('.writer').animate({bottom:'0px'}, 200);
         $('.contribute').animate({bottom:'155px', right:'50%', opacity: 1}, 200);
-        $("#cross").css({'-webkit-transform' : 'rotate('+ 45 +'deg)',
+        $('#cross').css({'-webkit-transform' : 'rotate('+ 45 +'deg)',
          '-moz-transform' : 'rotate('+ 45 +'deg)',
          '-ms-transform' : 'rotate('+ 45 +'deg)',
          'transform' : 'rotate('+ 45 +'deg)'});
-    }
+    };
 
-    $(".contribute").click(function(){
+    $('.contribute').click(function(){
       if (writerOpen) {
         closeWriter();
       } else {

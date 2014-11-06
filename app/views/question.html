@@ -31,8 +31,19 @@
     </div>
   </div>
 
+
+  <div class="card" ng-repeat="previousComment in previousComments | orderBy:date">
+    <b>{{ previousComment.author }}:</b> {{ previousComment.message }}
+    <div ng-click="deleteComment(previousComment._id)" class="button" style="display:none;">
+      delete
+    </div>
+  </div>
+
   <div class="card" ng-repeat="comment in comments | orderBy:date">
     <b>{{ comment.author }}:</b> {{ comment.message }}
+    <div ng-click="deleteComment(comment._id)" class="button" style="display:none;">
+      delete
+    </div>
   </div>
 
   <div class="spacer"></div>

@@ -1,5 +1,7 @@
 'use strict';
 
+/*global io */
+
 /**
  * @ngdoc overview
  * @name forumApp
@@ -36,7 +38,7 @@
  .factory('questionFactory', ['$http' , '$routeParams', function($http, $routeParams) {
 
     var questionFactory = {};
-    var urlBase = 'http://localhost:3000/questions';
+    var urlBase = 'http://0.0.0.0:8002/questions';
 
     questionFactory.getQuestions = function () {
         return $http.get(urlBase);
@@ -88,9 +90,58 @@
     return questionFactory;
 }])
 
+ .factory('commentFactory', ['$http' , '$routeParams', function($http, $routeParams) {
+
+    var commentFactory = {};
+    var urlBase = 'http://0.0.0.0:8002/comments';
+
+    commentFactory.getComments = function (id) {
+        return $http.get(urlBase + '/' + id);
+    };
+
+    commentFactory.addComment = function (id, comment) {
+        return $http.post(urlBase + '/' + id, comment);
+    };
+
+    // TODO
+    commentFactory.updateComment = function (editedQuestion) {
+        return $http.put(urlBase + '/' + $routeParams.id, editedQuestion);
+    };
+
+    // TODO
+    commentFactory.upVoteComment = function (id) {
+      return $http.put(urlBase + '/upvote/' + id);
+    };
+
+    // TODO
+    commentFactory.dnVoteComment = function (id) {
+      return $http.put(urlBase + '/dnvote/' + id);
+    };
+
+    commentFactory.deleteComment = function (commentId) {
+        return $http.delete(urlBase + '/' + commentId);
+    };
+
+    // commentFactory.questions = {
+    //   numberOfRequestsForQuestions: 1,
+    //   questionsList: []
+    // };
+
+    // // Populate the questionList
+    // commentFactory.getNextTenQuestions(0)
+    // .success(function (quest) {
+    //   commentFactory.questions.questionList = quest;
+    // })
+    // .error(function (error) {
+    //   console.log('Unable to load questions: ' + error.message);
+    // });
+
+
+    return commentFactory;
+}])
 
   .factory('socketFactory', ['$rootScope', function ($rootScope) {
-    var socket = io.connect('http://localhost:3000/');
+    var socket = io.connect('http://0.0.0.0:8002/');
       return {
       
       on: function (eventName, callback) {
